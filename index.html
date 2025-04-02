@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Natal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Galeria de Natal</h1>
+
+    <div id="gallery" class="gallery-grid">
+        <!-- Miniaturas serão inseridas aqui pelo JavaScript -->
+    </div>
+
+    <!-- O Modal/Popup -->
+    <div id="imageModal" class="modal">
+        <!-- Botão de Fechar -->
+        <span class="close-button" title="Fechar">×</span>
+
+        <!-- Botão de Navegação Anterior -->
+        <button class="nav-button prev" title="Anterior">❮</button>
+
+        <!-- Conteúdo Principal do Modal -->
+        <div class="modal-content-wrapper">
+            <img id="modal-image" src="" alt="Imagem em destaque">
+
+            <!-- ===== ESPAÇO PARA O GOOGLE ADSENSE ===== -->
+            <div id="adsense-banner-container">
+                <!--
+                  *****************************************************************
+                  *** COLE O CÓDIGO DO SEU BLOCO DE ANÚNCIOS DO GOOGLE ADSENSE AQUI ***
+                  *****************************************************************
+                  * Certifique-se de que o tamanho do anúncio (definido no AdSense)
+                  * seja apropriado para este espaço (ex: responsivo, 728x90, 300x250).
+                  * O container abaixo tem um max-width de 728px e centraliza.
+                  * Você pode remover o estilo de borda e fundo no CSS se desejar.
+                  * Exemplo de código AdSense (NÃO USAR ESTE, use o seu próprio):
+                  * <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx"
+                  *      crossorigin="anonymous"></script>
+                  * <ins class="adsbygoogle"
+                  *      style="display:block"
+                  *      data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+                  *      data-ad-slot="yyyyyyyyyy"
+                  *      data-ad-format="auto"
+                  *      data-full-width-responsive="true"></ins>
+                  * <script>
+                  *      (adsbygoogle = window.adsbygoogle || []).push({});
+                  * </script>
+                -->
+                <span style="color: #555; font-size: small; display: block; padding: 20px;">
+                    (Espaço Reservado para Anúncio do Google AdSense)
+                </span>
+            </div>
+            <!-- ===== FIM DO ESPAÇO ADSENSE ===== -->
+
+            <!-- Legenda e Instruções -->
+            <div class="caption-and-instructions">
+                 <p id="modal-caption"></p>
+                 <p id="save-instructions">
+                    <b>Como salvar:</b> Clique com o botão direito na imagem acima e escolha "Salvar imagem como..."
+                 </p>
+            </div>
+        </div>
+
+        <!-- Botão de Navegação Próximo -->
+        <button class="nav-button next" title="Próximo">❯</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

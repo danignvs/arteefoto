@@ -1,0 +1,171 @@
+/* Estilo Básico */
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Grade da Galeria */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Colunas responsivas */
+    gap: 10px; /* Espaçamento entre imagens */
+    padding: 10px;
+    max-width: 1200px; /* Largura máxima da galeria */
+    margin: 0 auto; /* Centraliza a galeria */
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 120px; /* Altura fixa para uniformidade */
+    object-fit: cover; /* Corta a imagem para caber, mantendo proporção */
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff; /* Fundo para imagens transparentes */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05); /* Efeito de zoom suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+
+/* Estilos do Modal (Popup) */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed; /* Fica fixo na tela */
+    z-index: 1000; /* Fica acima de outros conteúdos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Permite rolagem se o conteúdo for maior que a tela */
+    background-color: rgba(0, 0, 0, 0.85); /* Fundo escuro semi-transparente */
+    /* Usando flexbox para centralizar o conteúdo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* Espaçamento interno geral */
+    box-sizing: border-box;
+}
+
+/* Wrapper para o conteúdo dentro do modal (Imagem + Ad + Legenda) */
+.modal-content-wrapper {
+    position: relative; /* Permite posicionamento absoluto dentro dele, se necessário */
+    margin: auto;
+    display: block; /* Comportamento padrão de bloco */
+    width: auto; /* Largura se ajusta ao conteúdo */
+    max-width: 90%; /* Largura máxima para não ocupar a tela inteira */
+    text-align: center;
+}
+
+/* Imagem Principal no Modal */
+#modal-image {
+    display: block; /* Evita espaço extra abaixo */
+    max-width: 100%; /* Garante que não ultrapasse o wrapper */
+    /* Altura máxima calculada para deixar espaço para Ad e legenda */
+    /* Ajuste o valor (ex: 150px) se a altura do seu Ad + legenda for diferente */
+    max-height: calc(85vh - 150px);
+    margin: 0 auto 15px auto; /* Centraliza e adiciona margem abaixo */
+    background-color: white; /* Fundo para imagens transparentes */
+    border: 1px solid #555; /* Borda sutil */
+}
+
+/* Container do Anúncio AdSense */
+#adsense-banner-container {
+    /* Estilos para visualização - podem ser ajustados ou removidos */
+    min-height: 90px; /* Altura mínima comum */
+    border: 1px dashed #ccc;
+    background-color: #f0f0f0;
+    /* ---------------------------------------------------------- */
+    margin: 15px auto; /* Espaçamento vertical e centralização horizontal */
+    max-width: 728px; /* Largura comum (ajuste conforme seu bloco de anúncio) */
+    width: 95%; /* Evita ultrapassar em telas menores */
+    text-align: center;
+    overflow: hidden; /* Evita que o anúncio vaze */
+    display: flex; /* Para centralizar o texto de placeholder */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container para Legenda e Instruções */
+.caption-and-instructions {
+     margin-top: 10px;
+     color: #ccc; /* Cor do texto */
+     text-align: center;
+     padding: 0 10px;
+}
+#modal-caption {
+    margin-bottom: 8px;
+    font-weight: bold; /* Destaca a legenda */
+    color: #eee; /* Cor mais clara para a legenda */
+}
+
+#save-instructions {
+    font-size: 0.9em;
+    color: #bbb; /* Cor um pouco mais escura para as instruções */
+}
+
+
+/* Botão de Fechar */
+.close-button {
+    position: absolute; /* Posição relativa ao modal */
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 1001; /* Acima do conteúdo do modal */
+    line-height: 1; /* Ajuste para melhor alinhamento vertical */
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+/* Botões de Navegação (Anterior/Próximo) */
+.nav-button {
+    cursor: pointer;
+    position: absolute; /* Posição relativa ao modal */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    width: auto;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    transition: 0.3s ease;
+    user-select: none; /* Impede seleção de texto */
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo semi-transparente */
+    border: none;
+    border-radius: 3px; /* Leve arredondamento */
+    z-index: 1001; /* Acima do conteúdo do modal */
+}
+
+.nav-button.prev {
+    left: 10px; /* Posiciona à esquerda */
+}
+
+.nav-button.next {
+    right: 10px; /* Posiciona à direita */
+}
+
+.nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Escurece no hover */
+}
+
+/* Classe para ocultar botões de navegação */
+.nav-button.hidden {
+    display: none;
+}
