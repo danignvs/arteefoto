@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Seção de Dados ---
-    // (O array imageData permanece o mesmo da resposta anterior)
+    // Array com as informações das imagens (URL e título)
     const imageData = [
         { "url": "https://lh3.googleusercontent.com/pVATv5vfQEfX86YG_oP9_iZMvTRNv_sZdZTb2H71NRYou9zJY4nHyReLtghP1BYI0rBOAB9ynPs-jwUByg=s0", "titulo": "papainoelboneconeverena" },
         { "url": "https://lh3.googleusercontent.com/CjNWRxdSL9-ySbzjG987OajEduDVmq7sdfVmsLBDt--9o5Tvb3ogsFuoMXnwPh73DpMcXIBL3UcEUmwloQ=s0", "titulo": "bonecodeneve-biscoito" },
@@ -61,34 +61,30 @@ document.addEventListener('DOMContentLoaded', () => {
         { "url": "https://lh3.googleusercontent.com/-M-VXP5glN_M/VB2aQlMLVpI/AAAAAAAADj0/_hr_Uwzvwec/s0/ursinhovermelho.png", "titulo": "ursinho-vermelho" }
     ];
 
-
-    // --- Referências aos Elementos ---
+    // --- Referências aos Elementos do DOM ---
     const gallery = document.getElementById('gallery');
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modal-image');
     const modalCaption = document.getElementById('modal-caption');
-    // const downloadLink = document.getElementById('download-link'); // REMOVIDO
     const closeButton = modal.querySelector('.close-button');
     const prevButton = modal.querySelector('.nav-button.prev');
     const nextButton = modal.querySelector('.nav-button.next');
-    // Nota: A referência ao container do AdSense não é necessária aqui,
-    // a menos que você queira manipulá-lo via JS (o que geralmente não é o caso para AdSense).
 
-    let currentImageIndex = 0; // Índice da imagem atualmente exibida no modal
+    let currentImageIndex = 0;
 
     // --- Funções ---
 
-    // Preenche a grade da galeria com as miniaturas
+    /** Preenche a grade da galeria com as imagens miniatura. */
     function populateGallery() {
         gallery.innerHTML = '';
         imageData.forEach((imgData, index) => {
             const imgElement = document.createElement('img');
-             try {
-                // Tenta usar miniatura menor para carregamento mais rápido
+            try {
                 const thumbUrl = imgData.url.replace('=s0', '=s200');
                 imgElement.src = thumbUrl;
             } catch (e) {
-                imgElement.src = imgData.url; // Fallback
+                console.warn("Não foi possível gerar URL de miniatura para:", imgData.url);
+                imgElement.src = imgData.url;
             }
             imgElement.alt = imgData.titulo;
             imgElement.dataset.index = index;
@@ -97,64 +93,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Atualiza o conteúdo do modal (imagem, legenda)
-    // Remove a lógica de download
+    /** Atualiza o conteúdo do modal com a imagem e legenda corretas. */
     function updateModalContent(index) {
         if (index < 0 || index >= imageData.length) {
-            console.error("Índice fora dos limites:", index);
+            console.error("Índice inválido para updateModalContent:", index);
             return;
         }
         const imgData = imageData[index];
-        modalImage.src = imgData.url; // Carrega a imagem em resolução total
+        modalImage.src = imgData.url;
         modalImage.alt = imgData.titulo;
         modalCaption.textContent = imgData.titulo;
-
-        // Lógica do link de download foi REMOVIDA
-
         currentImageIndex = index;
-
-        // Mostra/oculta botões de navegação
         prevButton.classList.toggle('hidden', index === 0);
         nextButton.classList.toggle('hidden', index === imageData.length - 1);
-
-        // IMPORTANTE PARA ADSENSE:
-        // Se você estiver usando anúncios responsivos e precisar que eles se adaptem
-        // ao abrir o modal (o que geralmente não é necessário se o código for colado diretamente),
-        // talvez precise chamar alguma função de atualização do AdSense aqui.
-        // Consulte a documentação do AdSense para casos avançados. Normalmente, colar
-        // o código no HTML como indicado é suficiente.
     }
 
-    // Função forceDownload foi REMOVIDA
-
-    // Abre o modal com a imagem no índice especificado
+    /** Abre o modal e exibe a imagem correspondente ao índice fornecido. */
     function openModal(index) {
         updateModalContent(index);
+        // Define o display para flex PARA ABRIR o modal
         modal.style.display = 'flex';
         document.addEventListener('keydown', handleKeyboardNav);
     }
 
-    // Fecha o modal
+    /** Fecha o modal. */
     function closeModal() {
+        // Define o display para none PARA FECHAR o modal
         modal.style.display = 'none';
         document.removeEventListener('keydown', handleKeyboardNav);
     }
 
-    // Mostra a imagem anterior no modal
+    /** Navega para a imagem anterior no modal. */
     function showPreviousImage() {
         if (currentImageIndex > 0) {
             updateModalContent(currentImageIndex - 1);
         }
     }
 
-    // Mostra a próxima imagem no modal
+    /** Navega para a próxima imagem no modal. */
     function showNextImage() {
         if (currentImageIndex < imageData.length - 1) {
             updateModalContent(currentImageIndex + 1);
         }
     }
 
-    // Lida com a navegação por teclado
+    /** Lida com eventos de teclado (Escape, Setas Esquerda/Direita) quando o modal está aberto. */
     function handleKeyboardNav(event) {
         if (event.key === 'Escape') {
             closeModal();
@@ -165,21 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Ouvintes de Eventos ---
+    // --- Configuração Inicial dos Ouvintes de Eventos ---
     closeButton.addEventListener('click', closeModal);
     prevButton.addEventListener('click', showPreviousImage);
     nextButton.addEventListener('click', showNextImage);
-
-    // Ouvinte de evento para o link de download foi REMOVIDO
-
-    // Opcional: Fecha o modal se clicar no fundo
     modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
+        if (event.target === modal) { // Fecha se clicar no fundo
             closeModal();
         }
     });
 
     // --- Inicialização ---
-    populateGallery();
+    populateGallery(); // Cria a galeria ao carregar
+
+    // GARANTIA: Certifica que o modal está fechado no carregamento inicial
+    // (Embora o CSS deva cuidar disso, adiciona uma segurança extra)
+    modal.style.display = 'none';
 
 }); // Fim do DOMContentLoaded
